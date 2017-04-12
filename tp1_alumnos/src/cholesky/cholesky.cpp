@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <math.h>
+
 using namespace std;
 
 int main(){
@@ -73,6 +74,17 @@ int main(){
         for (int i = 0; i<cantEq;i++){
             b[i] = 1 + (((float)E[i].pg - (float)E[i].pp)/2);
         }
+
+        /**********la matriz b es  solo para caso de testeo*/
+        float B[cantEq][cantEq];
+        for(int i=0;i<cantEq;i++){
+                for(int j=0;j<cantEq;j++){
+                    B[i][j]=A[i][j];
+                }
+        }
+        /******************************************************/
+
+
 
 		float acum;
 
@@ -149,6 +161,20 @@ int main(){
 		for(int i=0;i<cantEq;i++){
             cout << i+1 << " -- " << x[i] << endl;
 		}
+
+		/*******comprobación del resultado****************/
+		cout << endl;
+        cout << "comparaciones b1 el resultado aplicar Ax" << endl;
+        cout << "vs. b2 el b original con i ->(1..n)" << endl;
+        cout << "i: -- b1[i] --- b2[i] --" << endl;
+        for(int i=0;i<cantEq;i++){
+            acum = 0,0;
+            for(int j=0;j<cantEq;j++){
+                acum = acum + B[i][j]*x[j];
+            }
+            cout << i+1 << ": -- " << acum << " --- " << b[i] << " --" << endl;
+        }
+        /******************************************************/
 
 	}
 return 0;
