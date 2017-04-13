@@ -11,11 +11,11 @@ using namespace std;
 
 int main(){
 	ifstream file;
-    file.open("input.txt",ios::in);
+    file.open("test1.in",ios::in);
     string line;
 
     if (file.fail()){
-        cout << " No se pudo abrir ";
+        cout << " No se pudo abrir " << endl;
     }else{
         string leoInt;
         getline(file, leoInt, ' ');
@@ -76,17 +76,17 @@ int main(){
         }
 
         /**********la matriz b es  solo para caso de testeo*/
-        float B[cantEq][cantEq];
+        float C[cantEq][cantEq];
         for(int i=0;i<cantEq;i++){
                 for(int j=0;j<cantEq;j++){
-                    B[i][j]=A[i][j];
+                    C[i][j]=A[i][j];
                 }
         }
         /******************************************************/
 
 
 
-		float acum;
+		float acum = 0.0;
 
 		//comienza el metodo de choleski
 		for(int k=0; k<cantEq; k++){
@@ -113,20 +113,20 @@ int main(){
 		}
 		//como A es triangular inferior y Lt es es triangular superior
 		//vamos a unir las dos matrices en A, de manera que A queda simetrica.
-
+		//A = L interseccion Lt
 		for(int i=1; i<cantEq; i++){
 			for(int j=0;j<i;j++){
 				A[j][i] = A[i][j];
 			}
 		}
-
+		/*
         cout << "la matriz compuesta de L(interseccion) Lt es la sgte:" << endl;
 		for(int i=0;i<cantEq;i++){
 			for(int j=0;j<cantEq;j++){
 				cout << "|" << A[i][j] << "|";
 			}
 			cout << endl;
-		}
+		}*/
         //La matriz A quedó convertida en L, luego Lt es solo intercambiar filas por columnas
         //La idea de cholesky es la siguiente:
         //Ax = b ......   A=L*Lt
@@ -145,12 +145,13 @@ int main(){
 		}
 
 		//ya se tiene el vector y, lo que falta realizar es Lt *x = y
+				
 		float x[cantEq];
-		x[cantEq]=y[cantEq-1]/A[cantEq-1][cantEq-1];
+		x[cantEq - 1]=y[cantEq-1]/A[cantEq-1][cantEq-1];
 
 		for(int i=cantEq-2;i>=0;i--){
 			acum = 0.0;
-			for(int j=cantEq-1;j>i;j--){
+			for(int j=i+1;j<cantEq;j++){
 				acum = acum + A[i][j]*x[j];
 			}
 			x[i]=(y[i]-acum)/A[i][i];
@@ -170,7 +171,7 @@ int main(){
         for(int i=0;i<cantEq;i++){
             acum = 0,0;
             for(int j=0;j<cantEq;j++){
-                acum = acum + B[i][j]*x[j];
+                acum = acum + C[i][j]*x[j];
             }
             cout << i+1 << ": -- " << acum << " --- " << b[i] << " --" << endl;
         }
