@@ -11,7 +11,7 @@ using namespace std;
 
 int main(){
 	ifstream file;
-    file.open("test1.in",ios::in);
+    file.open("entrada.txt",ios::in);
     string line;
 
     if (file.fail()){
@@ -69,12 +69,13 @@ int main(){
 			}
 			cout << endl;
 		}
-
+		cout << "B inicial: " << endl;
         float b[cantEq];
         for (int i = 0; i<cantEq;i++){
             b[i] = 1 + (((float)E[i].pg - (float)E[i].pp)/2);
+            cout << b[i] << " , ";
         }
-
+		cout << endl;
         /**********la matriz b es  solo para caso de testeo*/
         float C[cantEq][cantEq];
         for(int i=0;i<cantEq;i++){
